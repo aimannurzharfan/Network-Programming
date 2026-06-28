@@ -14,7 +14,6 @@ collected system information and the saved Ansible configuration outputs.
     ansible/    - Ansible playbooks, inventory file, and ansible.cfg
     scripts/    - Bash system-info script
     webapp/     - Python web app and Dockerfile
-    reference/  - Course slides and lab files (local only, not pushed)
 
 ## How to Run
 
