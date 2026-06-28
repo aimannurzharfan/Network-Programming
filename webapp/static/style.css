@@ -1,0 +1,20 @@
+body {
+    font-family: sans-serif;
+    color: #222;
+    margin: 20px;
+}
+
+h1 {
+    color: #2a4d69;
+}
+
+h2 {
+    color: #2a4d69;
+    margin-top: 25px;
+}
+
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
