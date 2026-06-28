@@ -1,0 +1,6 @@
+interface GigabitEthernet1
+ ip address 192.168.56.102 255.255.255.0
+ description Configured by Ansible
+ no shutdown
+
+(placeholder config)
