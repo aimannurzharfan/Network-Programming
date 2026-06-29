@@ -14,7 +14,9 @@
     - name: Configure a banner message
       ios_config:
         lines:
-          - banner motd # Unauthorized access is strictly prohibited! #
+          - banner motd #
+          - Unauthorized access is strictly prohibited!
+          - #
 
     - name: Verify user account configuration
       ios_command:
