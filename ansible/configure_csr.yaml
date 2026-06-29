@@ -2,6 +2,7 @@
 ---
 - name: Configure CSR1000v User and Banner
   hosts: CSR1kv
+  connection: network_cli
   gather_facts: false
 
   tasks:
