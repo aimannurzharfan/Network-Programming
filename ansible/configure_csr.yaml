@@ -3,7 +3,6 @@
 - name: Configure CSR1000v User and Banner
   hosts: CSR1kv
   gather_facts: false
-  connection: local
 
   tasks:
     - name: Create a user account
