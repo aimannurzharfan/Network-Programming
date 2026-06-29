@@ -1,0 +1,44 @@
+
+---
+- name: Configure CSR1000v User and Banner
+  hosts: CSR1kv
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Create a user account
+      ios_config:
+        lines:
+          - username admin privilege 15 secret cisco123!
+
+    - name: Configure a banner message
+      ios_config:
+        lines:
+          - banner motd # Unauthorized access is strictly prohibited! #
+
+    - name: Verify user account configuration
+      ios_command:
+        commands: 
+          - show running-config | include username
+      register: user_output
+
+    - name: Verify banner configuration
+      ios_command:
+        commands: 
+          - show running-config | include banner
+      register: banner_output
+
+    - name: Ensure the ios_configurations directory exists
+      file:
+        path: ./ios_configurations
+        state: directory
+
+    - name: Save user account output to text file
+      copy:
+        content: "{{ user_output.stdout[0] }}\n"
+        dest: ./ios_configurations/user_account.txt
+
+    - name: Save banner output to text file
+      copy:
+        content: "{{ banner_output.stdout[0] }}\n"
+        dest: ./ios_configurations/banner.txt
