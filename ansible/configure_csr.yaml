@@ -10,12 +10,10 @@
         lines:
           - username admin privilege 15 secret cisco123!
 
-    - name: Set the MOTD banner
-      cisco.ios.ios_banner:
-        banner: motd
-        text: |
-          #UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED.#
-        state: present
+    - name: Set MOTD banner
+      ios_config:
+        lines:
+          - banner motd ^Unauthorized access to this device is prohibited^
 
     - name: Verify user account configuration
       ios_command:
