@@ -10,12 +10,10 @@
         lines:
           - username admin privilege 15 secret cisco123!
 
-    - name: Set the MOTD banner
-      cisco.ios.ios_banner:
-        banner: motd
-        text: |
-          #UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED.#
-        state: present
+    - name: Set MOTD banner
+      ios_config:
+        lines:
+          - banner motd ^Unauthorized access to this device is prohibited^
 
     - name: Verify user account configuration
       ios_command:
@@ -37,9 +35,9 @@
     - name: Save user account output to text file
       copy:
         content: "{{ user_output.stdout[0] }}\n"
-        dest: ./ios_configurations/user_account.txt
+        dest: ios_configurations/user_account.txt
 
     - name: Save banner output to text file
       copy:
         content: "{{ banner_output.stdout[0] }}\n"
-        dest: ./ios_configurations/banner.txt
+        dest: ios_configurations/banner.txt
