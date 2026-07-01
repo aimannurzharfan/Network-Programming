@@ -1,0 +1,52 @@
+---
+- name: Configure CSR1000v Interface IP and Description
+  hosts: CSR1kv
+  connection: network_cli
+  gather_facts: false
+
+  vars:
+    target_interface: GigabitEthernet2
+    interface_ip: 10.10.10.1
+    interface_mask: 255.255.255.0
+    interface_desc: "Configured by Ansible - Bahrul"
+
+  tasks:
+    - name: Ensure the ios_configurations directory exists
+      file:
+        path: ./ios_configurations
+        state: directory
+
+    - name: Configure interface IP address and enable it
+      ios_config:
+        parents: "interface {{ target_interface }}"
+        lines:
+          - ip address {{ interface_ip }} {{ interface_mask }}
+          - no shutdown
+
+    - name: Configure interface description
+      ios_config:
+        parents: "interface {{ target_interface }}"
+        lines:
+          - description {{ interface_desc }}
+
+    - name: Retrieve IP interface brief
+      ios_command:
+        commands:
+          - show ip interface brief
+      register: ip_brief_output
+
+    - name: Save IP interface brief output to text file
+      copy:
+        content: "{{ ip_brief_output.stdout[0] }}\n"
+        dest: ios_configurations/ip_address.txt
+
+    - name: Retrieve interface running-config
+      ios_command:
+        commands:
+          - show running-config interface {{ target_interface }}
+      register: interface_config_output
+
+    - name: Save interface running-config output to text file
+      copy:
+        content: "{{ interface_config_output.stdout[0] }}\n"
+        dest: ios_configurations/interface_description.txt
