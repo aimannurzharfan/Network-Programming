@@ -1,0 +1,11 @@
+Building configuration...
+
+Current configuration : 163 bytes
+!
+interface GigabitEthernet2
+ description Configured by Ansible - Bahrul
+ ip address 10.10.10.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+end
