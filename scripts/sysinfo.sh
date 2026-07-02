@@ -12,4 +12,9 @@ date
 # print CPU info
 echo ""
 echo "=== CPU INFO ==="
-lscpu 2> /dev/null || grep "model name" /proc/cpuinfo | head -1
+lscpu 2> /dev/null | grep -i "model name"
+
+# print memory usage
+echo ""
+echo "=== MEMORY USAGE ==="
+free -h
