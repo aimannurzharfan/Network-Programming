@@ -1,0 +1,38 @@
+---
+- name: Configure static route on CSR1000v and collect device information
+  hosts: CSR1kv
+  connection: network_cli
+  gather_facts: false
+
+  vars:
+    route_network: 172.16.0.0
+    route_mask: 255.255.255.0
+    route_next_hop: 192.168.56.1
+
+  tasks:
+    - name: Ensure the ios_configurations directory exists
+      file:
+        path: "{{ playbook_dir }}/ios_configurations"
+        state: directory
+
+    - name: Configure a static route
+      ios_config:
+        lines:
+          - "ip route {{ route_network }} {{ route_mask }} {{ route_next_hop }}"
+
+    - name: Retrieve device information
+      ios_command:
+        commands:
+          - show version
+          - show ip route
+      register: device_info_output
+
+    - name: Save device version information
+      copy:
+        content: "{{ device_info_output.stdout[0] }}\n"
+        dest: "{{ playbook_dir }}/ios_configurations/device_info.txt"
+
+    - name: Save routing information
+      copy:
+        content: "{{ device_info_output.stdout[1] }}\n"
+        dest: "{{ playbook_dir }}/ios_configurations/static_route.txt"
