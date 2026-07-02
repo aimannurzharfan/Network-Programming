@@ -18,3 +18,8 @@ lscpu 2> /dev/null | grep -i "model name"
 echo ""
 echo "=== MEMORY USAGE ==="
 free -h
+
+# print disk uage
+echo ""
+echo "=== DISK USAGE ==="
+df -h
