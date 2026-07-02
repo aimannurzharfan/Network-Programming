@@ -10,6 +10,9 @@ if ls ../ansible/ios_configurations/*.txt 1> /dev/null 2>&1; then
     cp ../ansible/ios_configurations/*.txt data/configs/.
 fi
 
+# clean workspace
+rm -rf tempdir
+
 # make workspace
 mkdir tempdir
 mkdir tempdir/templates
@@ -34,5 +37,9 @@ echo "CMD python3 /home/myapp/app.py" >> tempdir/Dockerfile
 # build and run
 cd tempdir
 docker build -t toolkitapp .
+
+# remove old
+docker rm -f toolkitrunning 2>/dev/null
+
 docker run -t -d -p 8080:8080 --name toolkitrunning toolkitapp
 docker ps -a
