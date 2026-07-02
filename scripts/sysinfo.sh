@@ -23,3 +23,8 @@ free -h
 echo ""
 echo "=== DISK USAGE ==="
 df -h
+
+# print logged-in users
+echo ""
+echo "=== LOGGED-IN USERS ==="
+who
