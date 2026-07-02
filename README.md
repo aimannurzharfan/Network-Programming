@@ -1,38 +1,37 @@
 # Network + System Automation Toolkit
 
-This project has three parts. The first part uses Ansible to configure a Cisco
-CSR1000v router: setting up an IP address, creating a user account, setting a
-banner, adding an interface description, configuring a static route, and
-retrieving device information. The second part is a Bash script that collects
-Linux system information including hostname, date and time, CPU and memory usage,
-disk usage, logged-in users, and the top 5 processes by CPU. The third part is a
-Python web application running inside a Docker container that displays the
-collected system information and the saved Ansible configuration outputs.
+This project automates a small network and system administration workflow.
+Ansible playbooks configure a Cisco CSR1000v router and save the resulting
+configurations, a Bash script collects Linux system information, and a Python
+web app running in Docker displays everything in one page.
 
 ## Folder Structure
 
-    ansible/    - Ansible playbooks, inventory file, and ansible.cfg
-    scripts/    - Bash system-info script
-    webapp/     - Python web app and Dockerfile
+    ansible/    - Ansible playbooks, hosts inventory, and ansible.cfg
+    scripts/    - Bash system-info script (sysinfo.sh)
+    webapp/     - Flask web app and build.sh
 
 ## How to Run
 
-### Ansible Playbooks
+1. Clone the repo.
 
-Make sure Ansible is installed and the CSR1000v is reachable.
+2. In `ansible/hosts`, set `ansible_host` to your own CSR1000v IP
+   (192.168.56.101 or 192.168.56.102).
 
-    cd ansible/
-    ansible-playbook -i hosts <playbook-name>.yml
+3. From inside `ansible/`, run the playbooks:
 
-### Bash System-Info Script
+       ansible-playbook configure_interface.yaml -i hosts
+       ansible-playbook configure_csr.yaml -i hosts
+       ansible-playbook configure_static_route.yaml -i hosts
 
-    cd scripts/
-    bash system_info.sh
+4. Build and run the web app:
 
-### Web App (Docker)
+       cd webapp
+       bash build.sh
 
-    cd webapp/
-    docker build -t webapp .
-    docker run -p 5000:5000 webapp
+5. Open http://localhost:8080 to view the system info and saved device configs.
 
-Then open a browser at http://localhost:5000
+## Notes
+
+The playbooks save their outputs in `ansible/ios_configurations/` and the web
+app reads them from there.
