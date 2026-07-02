@@ -1,30 +1,35 @@
 #!/usr/bin/env bash
 
 # print hostname
-echo "=== HOSTNAME ==="
+echo "=============================== HOSTNAME ==============================="
 hostname || uname -n
 
 # print current date and time
 echo ""
-echo "=== DATE AND TIME ==="
+echo "============================ DATE AND TIME ============================="
 date
 
 # print CPU info
 echo ""
-echo "=== CPU INFO ==="
+echo "=============================== CPU INFO ==============================="
 lscpu 2> /dev/null | grep -i "model name"
 
 # print memory usage
 echo ""
-echo "=== MEMORY USAGE ==="
+echo "============================= MEMORY USAGE ============================="
 free -h
 
 # print disk uage
 echo ""
-echo "=== DISK USAGE ==="
+echo "============================== DISK USAGE =============================="
 df -h
 
 # print logged-in users
 echo ""
-echo "=== LOGGED-IN USERS ==="
+echo "=========================== LOGGED-IN USERS -==========================="
 who
+
+# print top 5 cpu processes
+echo ""
+echo "======================== TOP 5 PROCESSES BY CPU ========================"
+ps -eo pid,comm,%cpu --sort=-%cpu | head -6
