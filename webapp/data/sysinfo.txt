@@ -1,7 +1,0 @@
-Hostname: devasc-vm
-Date: 2026-06-28 00:00:00
-CPU usage: 5%
-Memory usage: 1.2G / 4.0G
-Disk usage: 12G / 60G
-
-(placeholder data)
